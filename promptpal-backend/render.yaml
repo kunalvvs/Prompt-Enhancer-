@@ -20,7 +20,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        # value: https://promptpal-frontend.onrender.com
+        value: https://promptyenhancer.vercel.app/
 
 databases:
   - name: promptpal-db
