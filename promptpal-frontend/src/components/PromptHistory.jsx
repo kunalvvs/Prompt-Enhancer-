@@ -49,27 +49,27 @@ const PromptHistory = () => {
 
   if (loading) {
     return (
-      <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
-        <div className="p-8 text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-white/30 border-t-white rounded-full mx-auto mb-4"></div>
-          <p className="text-white">Loading your prompt history...</p>
+      <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden mx-2 sm:mx-0">
+        <div className="p-4 sm:p-6 md:p-8 text-center">
+          <div className="animate-spin w-6 h-6 sm:w-8 sm:h-8 border-4 border-white/30 border-t-white rounded-full mx-auto mb-3 sm:mb-4"></div>
+          <p className="text-white text-sm sm:text-base">Loading your prompt history...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
+    <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden mx-2 sm:mx-0">
       {/* Animated header */}
-      <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 p-6 border-b border-white/10">
+      <div className="bg-gradient-to-r from-purple-600/20 to-pink-600/20 p-3 sm:p-4 md:p-6 border-b border-white/10">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
-              <span className="text-white text-lg">📜</span>
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
+              <span className="text-white text-base sm:text-lg">📜</span>
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">Past Prompts</h2>
-              <p className="text-gray-300 text-sm">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white">Past Prompts</h2>
+              <p className="text-gray-300 text-xs sm:text-sm">
                 {isAuthenticated ? 'Your analysis history' : 'Sign in to view your history'}
               </p>
             </div>
@@ -77,23 +77,23 @@ const PromptHistory = () => {
           {isAuthenticated && (
             <button
               onClick={fetchHistory}
-              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+              className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-105 flex items-center space-x-1 sm:space-x-2"
             >
               <div className="flex items-center space-x-1">
-                <span>🔄</span>
-                <span>Refresh</span>
+                <span className="text-sm sm:text-base">🔄</span>
+                <span className="text-xs sm:text-sm">Refresh</span>
               </div>
             </button>
           )}
         </div>
       </div>
 
-      <div className="p-6">
+      <div className="p-3 sm:p-4 md:p-6">
         {error && (
-          <div className="mb-6 p-4 bg-red-500/20 border border-red-400/50 text-red-200 rounded-xl animate-shake">
+          <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-500/20 border border-red-400/50 text-red-200 rounded-lg sm:rounded-xl animate-shake">
             <div className="flex items-center space-x-2">
               <span className="text-red-400">⚠️</span>
-              <span>{error}</span>
+              <span className="text-xs sm:text-sm">{error}</span>
             </div>
           </div>
         )}

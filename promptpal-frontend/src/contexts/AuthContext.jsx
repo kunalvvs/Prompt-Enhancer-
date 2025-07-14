@@ -108,21 +108,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const googleLogin = async (token) => {
+  const googleLogin = async (data) => {
     try {
-      // The token is already the full response from backend
+      // Token and user data are already provided from the Google auth response
+      const { token, user } = data;
       localStorage.setItem('token', token);
       setToken(token);
-      
-      // Fetch user profile
-      const response = await axios.get('/auth/profile');
-      setUser(response.data.user);
+      setUser(user);
       
       return { success: true };
     } catch (error) {
       return { 
         success: false, 
-        error: error.response?.data?.error || 'Google sign-in failed' 
+        error: 'Google sign-in failed' 
       };
     }
   };

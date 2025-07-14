@@ -52,21 +52,21 @@ function AppContent() {
         <div className="absolute bottom-1/4 left-1/2 w-1 h-1 bg-pink-300 rounded-full animate-pulse opacity-25"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto p-4 pt-20">
+      <div className="relative z-10 max-w-7xl mx-auto p-2 sm:p-4 pt-16 sm:pt-20">
         {/* Header with animations */}
-        <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-          <div className="inline-block mb-4">
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent animate-pulse">
+        <div className={`text-center mb-6 sm:mb-8 md:mb-12 transition-all duration-1000 delay-300 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+          <div className="inline-block mb-2 sm:mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent animate-pulse">
               🧠 Prompt Elevate
             </h1>
           </div>
-          <p className="text-xl text-gray-300 font-light animate-fade-in">
+          <p className="text-sm sm:text-lg md:text-xl text-gray-300 font-light animate-fade-in px-4">
             AI-Powered Prompt Optimizer & Analyzer
           </p>
-          <div className="mt-4 flex justify-center space-x-2">
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-            <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-            <div className="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          <div className="mt-2 sm:mt-4 flex justify-center space-x-2">
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-bounce"></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
           </div>
         </div>
         
@@ -81,12 +81,12 @@ function AppContent() {
       </div>
 
       {/* Floating action button */}
-      <div className={`fixed bottom-8 right-8 transition-all duration-1000 delay-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+      <div className={`fixed bottom-4 right-4 sm:bottom-8 sm:right-8 transition-all duration-1000 delay-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
         <button 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="bg-white/10 backdrop-blur-md border border-white/20 text-white p-4 rounded-full shadow-lg hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-xl"
+          className="bg-white/10 backdrop-blur-md border border-white/20 text-white p-3 sm:p-4 rounded-full shadow-lg hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-xl"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
           </svg>
         </button>

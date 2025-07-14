@@ -16,7 +16,7 @@ const testEmail = async () => {
 
     // Test email
     const mailOptions = {
-      from: 'YOUR_GMAIL_ADDRESS@gmail.com',
+      from: 'innovativedeveloperzone@gmail.com',
       to: 'playergaming785@gmail.com', // Send to yourself for testing
       subject: '✅ Prompt Elevate - Email Test',
       html: `

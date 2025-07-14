@@ -102,7 +102,7 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
 
   const handleGoogleSuccess = async (data) => {
     try {
-      const result = await googleLogin(data.token);
+      const result = await googleLogin(data);
       if (result.success) {
         onClose();
         // Refresh the page to load user data and history
@@ -122,15 +122,15 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-auto animate-slide-up">
-        <div className="p-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-auto animate-slide-up max-h-[95vh] overflow-y-auto">
+        <div className="p-4 sm:p-6 md:p-8">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          <div className="text-center mb-4 sm:mb-6 md:mb-8">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-1 sm:mb-2">
               {mode === 'login' ? 'Welcome Back' : 'Create Account'}
             </h2>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               {mode === 'login' 
                 ? 'Sign in to access your prompt history' 
                 : 'Join Prompt Elevate to save your prompts'
@@ -140,21 +140,21 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
 
           {/* Error Message */}
           {errors.general && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{errors.general}</p>
+            <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-xs sm:text-sm">{errors.general}</p>
             </div>
           )}
 
           {/* Verification Message */}
           {showVerificationMessage && (
-            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <div className="flex items-center">
-                <svg className="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <p className="text-blue-600 text-sm font-medium">Check your email!</p>
+                <p className="text-blue-600 text-xs sm:text-sm font-medium">Check your email!</p>
               </div>
-              <p className="text-blue-600 text-sm mt-1">
+              <p className="text-blue-600 text-xs sm:text-sm mt-1">
                 We've sent a verification link to your email address. Please click the link to verify your account.
               </p>
             </div>
@@ -169,9 +169,9 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
                 disabled={loading}
               />
               
-              <div className="flex items-center my-6">
+              <div className="flex items-center my-4 sm:my-6">
                 <div className="flex-1 border-t border-gray-300"></div>
-                <span className="px-4 text-sm text-gray-500 bg-white">or</span>
+                <span className="px-3 sm:px-4 text-xs sm:text-sm text-gray-500 bg-white">or</span>
                 <div className="flex-1 border-t border-gray-300"></div>
               </div>
             </>
@@ -179,10 +179,10 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
 
           {/* Form */}
           {!showVerificationMessage && (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-6">
             {mode === 'register' && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   Username
                 </label>
                 <input
@@ -190,19 +190,19 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all ${
+                  className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm sm:text-base ${
                     errors.username ? 'border-red-300 bg-red-50' : 'border-gray-300'
                   }`}
                   placeholder="Enter your username"
                 />
                 {errors.username && (
-                  <p className="mt-1 text-sm text-red-600">{errors.username}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-600">{errors.username}</p>
                 )}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                 Email
               </label>
               <input
@@ -210,18 +210,18 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all ${
+                className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm sm:text-base ${
                   errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
                 }`}
                 placeholder="Enter your email"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                <p className="mt-1 text-xs sm:text-sm text-red-600">{errors.email}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                 Password
               </label>
               <input
@@ -229,19 +229,19 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all ${
+                className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm sm:text-base ${
                   errors.password ? 'border-red-300 bg-red-50' : 'border-gray-300'
                 }`}
                 placeholder="Enter your password"
               />
               {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                <p className="mt-1 text-xs sm:text-sm text-red-600">{errors.password}</p>
               )}
             </div>
 
             {mode === 'register' && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   Confirm Password
                 </label>
                 <input
@@ -249,13 +249,13 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all ${
+                  className={`w-full px-3 sm:px-4 py-2 sm:py-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-sm sm:text-base ${
                     errors.confirmPassword ? 'border-red-300 bg-red-50' : 'border-gray-300'
                   }`}
                   placeholder="Confirm your password"
                 />
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-red-600">{errors.confirmPassword}</p>
                 )}
               </div>
             )}
@@ -264,11 +264,11 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 focus:ring-4 focus:ring-purple-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 focus:ring-4 focus:ring-purple-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
             >
               {loading ? (
                 <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin -ml-1 mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
@@ -283,8 +283,8 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
 
           {/* Toggle Mode */}
           {!showVerificationMessage && (
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-gray-600 text-xs sm:text-sm">
               {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
               <button
                 onClick={onToggleMode}
@@ -299,9 +299,9 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
