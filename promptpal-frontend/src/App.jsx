@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import PromptForm from './components/PromptForm';
 import PromptHistory from './components/PromptHistory';
 import Header from './components/Header';
+import EmailVerification from './components/EmailVerification';
 import './index.css';
 
 
@@ -18,6 +19,10 @@ function AppContent() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Check if this is an email verification page
+  const isVerificationPage = window.location.pathname === '/verify-email' || 
+                           window.location.search.includes('token=');
+
   useEffect(() => {
     // Add entrance animation
     const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -28,6 +33,11 @@ function AppContent() {
     // Trigger a refresh of the history component
     setRefreshKey(prev => prev + 1);
   };
+
+  // Render email verification page if needed
+  if (isVerificationPage) {
+    return <EmailVerification />;
+  }
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 transition-all duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>

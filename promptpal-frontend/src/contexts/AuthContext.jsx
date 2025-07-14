@@ -54,6 +54,14 @@ export const AuthProvider = ({ children }) => {
         password
       });
 
+      if (response.data.requiresVerification) {
+        return { 
+          success: false, 
+          requiresVerification: true,
+          error: response.data.error 
+        };
+      }
+
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       setToken(token);
@@ -61,9 +69,11 @@ export const AuthProvider = ({ children }) => {
       
       return { success: true };
     } catch (error) {
+      const errorData = error.response?.data;
       return { 
         success: false, 
-        error: error.response?.data?.error || 'Login failed' 
+        requiresVerification: errorData?.requiresVerification || false,
+        error: errorData?.error || 'Login failed' 
       };
     }
   };
@@ -76,6 +86,14 @@ export const AuthProvider = ({ children }) => {
         password
       });
 
+      if (response.data.requiresVerification) {
+        return { 
+          success: true, 
+          requiresVerification: true,
+          message: response.data.message 
+        };
+      }
+
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       setToken(token);
@@ -86,6 +104,25 @@ export const AuthProvider = ({ children }) => {
       return { 
         success: false, 
         error: error.response?.data?.error || 'Registration failed' 
+      };
+    }
+  };
+
+  const googleLogin = async (token) => {
+    try {
+      // The token is already the full response from backend
+      localStorage.setItem('token', token);
+      setToken(token);
+      
+      // Fetch user profile
+      const response = await axios.get('/auth/profile');
+      setUser(response.data.user);
+      
+      return { success: true };
+    } catch (error) {
+      return { 
+        success: false, 
+        error: error.response?.data?.error || 'Google sign-in failed' 
       };
     }
   };
@@ -103,6 +140,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     register,
+    googleLogin,
     logout,
     isAuthenticated: !!user
   };

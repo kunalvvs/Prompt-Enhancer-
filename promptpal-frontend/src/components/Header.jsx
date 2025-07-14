@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import AuthModal from './AuthModal';
+import AIToolsNavigation from './AIToolsNavigation';
 
 const Header = () => {
   const { user, logout, isAuthenticated } = useAuth();
@@ -34,6 +35,9 @@ const Header = () => {
 
           {/* Auth Section */}
           <div className="flex items-center space-x-4">
+            {/* AI Tools Navigation */}
+            <AIToolsNavigation />
+            
             {isAuthenticated ? (
               <div className="relative">
                 <button

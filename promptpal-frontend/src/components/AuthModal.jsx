@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import GoogleSignIn from './GoogleSignIn';
 
 const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,8 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const { login, register } = useAuth();
+  const [showVerificationMessage, setShowVerificationMessage] = useState(false);
+  const { login, register, googleLogin } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -73,17 +75,48 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
       }
 
       if (result.success) {
-        onClose();
-        setFormData({ username: '', email: '', password: '', confirmPassword: '' });
-        setErrors({});
+        if (result.requiresVerification) {
+          setShowVerificationMessage(true);
+          setFormData({ username: '', email: '', password: '', confirmPassword: '' });
+          setErrors({});
+        } else {
+          onClose();
+          setFormData({ username: '', email: '', password: '', confirmPassword: '' });
+          setErrors({});
+          // Refresh the page to load user data
+          window.location.reload();
+        }
       } else {
-        setErrors({ general: result.error });
+        if (result.requiresVerification) {
+          setShowVerificationMessage(true);
+        } else {
+          setErrors({ general: result.error });
+        }
       }
     } catch (error) {
       setErrors({ general: 'An unexpected error occurred' });
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleGoogleSuccess = async (data) => {
+    try {
+      const result = await googleLogin(data.token);
+      if (result.success) {
+        onClose();
+        // Refresh the page to load user data and history
+        window.location.reload();
+      } else {
+        setErrors({ general: result.error });
+      }
+    } catch (error) {
+      setErrors({ general: 'Google sign-in failed' });
+    }
+  };
+
+  const handleGoogleError = (error) => {
+    setErrors({ general: error });
   };
 
   if (!isOpen) return null;
@@ -112,7 +145,40 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
             </div>
           )}
 
+          {/* Verification Message */}
+          {showVerificationMessage && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center">
+                <svg className="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <p className="text-blue-600 text-sm font-medium">Check your email!</p>
+              </div>
+              <p className="text-blue-600 text-sm mt-1">
+                We've sent a verification link to your email address. Please click the link to verify your account.
+              </p>
+            </div>
+          )}
+
+          {/* Google Sign-In */}
+          {!showVerificationMessage && (
+            <>
+              <GoogleSignIn 
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                disabled={loading}
+              />
+              
+              <div className="flex items-center my-6">
+                <div className="flex-1 border-t border-gray-300"></div>
+                <span className="px-4 text-sm text-gray-500 bg-white">or</span>
+                <div className="flex-1 border-t border-gray-300"></div>
+              </div>
+            </>
+          )}
+
           {/* Form */}
+          {!showVerificationMessage && (
           <form onSubmit={handleSubmit} className="space-y-6">
             {mode === 'register' && (
               <div>
@@ -213,8 +279,10 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
               )}
             </button>
           </form>
+          )}
 
           {/* Toggle Mode */}
+          {!showVerificationMessage && (
           <div className="mt-6 text-center">
             <p className="text-gray-600">
               {mode === 'login' ? "Don't have an account? " : "Already have an account? "}
@@ -226,6 +294,7 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
               </button>
             </p>
           </div>
+          )}
 
           {/* Close Button */}
           <button

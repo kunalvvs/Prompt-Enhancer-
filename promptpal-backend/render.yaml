@@ -17,6 +17,12 @@ services:
           property: connectionString
       - key: GEMINI_API_KEY
         sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
