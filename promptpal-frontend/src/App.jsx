@@ -47,7 +47,7 @@ function AppContent() {
         <div className={`text-center mb-12 transition-all duration-1000 delay-300 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
           <div className="inline-block mb-4">
             <h1 className="text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent animate-pulse">
-              🧠 PromptPal
+              🧠 Prompt Elevate
             </h1>
           </div>
           <p className="text-xl text-gray-300 font-light animate-fade-in">

@@ -100,7 +100,7 @@ const AuthModal = ({ isOpen, onClose, mode, onToggleMode }) => {
             <p className="text-gray-600">
               {mode === 'login' 
                 ? 'Sign in to access your prompt history' 
-                : 'Join PromptPal to save your prompts'
+                : 'Join Prompt Elevate to save your prompts'
               }
             </p>
           </div>
