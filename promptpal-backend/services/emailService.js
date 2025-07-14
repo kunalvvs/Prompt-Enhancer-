@@ -21,7 +21,12 @@ const generateVerificationToken = () => {
 const sendVerificationEmail = async (email, username, token) => {
   const transporter = createTransporter();
   
-  const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  const verificationUrl = `${frontendUrl}/verify-email?token=${token}`;
+  
+  // Log the URL being used for debugging
+  console.log('🔗 Verification URL being sent:', verificationUrl);
+  console.log('🌍 Frontend URL from env:', process.env.FRONTEND_URL);
   
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -84,6 +89,8 @@ const sendVerificationEmail = async (email, username, token) => {
 const sendWelcomeEmail = async (email, username) => {
   const transporter = createTransporter();
   
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+  
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
@@ -109,7 +116,7 @@ const sendWelcomeEmail = async (email, username) => {
           </ul>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="${process.env.FRONTEND_URL}" 
+            <a href="${frontendUrl}" 
                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
                       color: white; 
                       padding: 15px 30px; 
